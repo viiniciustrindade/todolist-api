@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.w3c.dom.Text;
 
 @Entity
-@Table(name = "Tarefa")
+@Table(name = "tarefa")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,3 +30,4 @@ public class Tarefa {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 }
+
