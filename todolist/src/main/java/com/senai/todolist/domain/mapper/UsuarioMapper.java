@@ -1,0 +1,23 @@
+package com.senai.todolist.domain.mapper;
+
+import com.senai.todolist.domain.dto.usuario.UsuarioRequisicaoDto;
+import com.senai.todolist.domain.dto.usuario.UsuarioRespostaDto;
+import com.senai.todolist.domain.model.Usuario;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UsuarioMapper {
+    public Usuario toEntity(UsuarioRequisicaoDto requisicaoDto){
+        return new Usuario(requisicaoDto.nome(), requisicaoDto.senha());
+    }
+
+    public Usuario toUpdateDto(UsuarioRequisicaoDto requisicaoDto, Usuario usuario){
+        usuario.setNome(requisicaoDto.nome());
+        usuario.setSenha(requisicaoDto.senha());
+        return usuario;
+    }
+
+    public UsuarioRespostaDto toRespostaDto(Usuario usuario){
+        return new UsuarioRespostaDto(usuario.getId(), usuario.getNome());
+    }
+}
