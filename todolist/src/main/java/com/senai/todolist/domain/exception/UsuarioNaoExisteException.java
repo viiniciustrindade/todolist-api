@@ -1,8 +1,10 @@
 package com.senai.todolist.domain.exception;
 
-public class UsuarioNaoExisteException extends RuntimeException{
-    public UsuarioNaoExisteException(String mensagem){
-        super(mensagem);
-    }
+import org.springframework.http.HttpStatus;
 
+public class UsuarioNaoExisteException extends BusinessException{
+    public UsuarioNaoExisteException(String email) {
+        super("Usuário com email " + email + " não encontrado.",
+                ErrorCode.USUARIO_NAO_ENCONTRADO);
+    }
 }

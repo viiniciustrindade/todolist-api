@@ -1,7 +1,7 @@
 package com.senai.todolist.domain.mapper;
 
-import com.senai.todolist.domain.dto.usuario.UsuarioRequisicaoDto;
-import com.senai.todolist.domain.dto.usuario.UsuarioRespostaDto;
+import com.senai.todolist.domain.dto.usuario.cadastro.UsuarioRequisicaoDto;
+import com.senai.todolist.domain.dto.usuario.cadastro.UsuarioRespostaDto;
 import com.senai.todolist.domain.model.Usuario;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,8 @@ public class UsuarioMapper {
     }
 
     public UsuarioRespostaDto toRespostaDto(Usuario usuario){
-        return new UsuarioRespostaDto(usuario.getId(), usuario.getNome());
+        return new UsuarioRespostaDto(usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail());
     }
 }
