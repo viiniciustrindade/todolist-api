@@ -1,5 +1,6 @@
 package com.senai.todolist.api.controller;
 
+import com.senai.todolist.domain.dto.tarefa.TarefaPatchDto;
 import com.senai.todolist.domain.dto.tarefa.TarefaRequisicaoDto;
 import com.senai.todolist.domain.dto.tarefa.TarefaRespostaDto;
 import com.senai.todolist.domain.model.Usuario;
@@ -31,7 +32,7 @@ public class TarefaController {
             UriComponentsBuilder uriBuilder
     ){
         TarefaRespostaDto resposta =
-                tarefaService.criarTarefa(requisicaoDto,usuario);
+                tarefaService.criarTarefa(usuario,requisicaoDto);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -53,4 +54,28 @@ public class TarefaController {
 
             return ResponseEntity.ok(pagina);
     }
+
+    @PatchMapping("/{idTarefa}")
+    public ResponseEntity<TarefaRespostaDto> atualizaTarefa(
+            @PathVariable Long idTarefa,
+            @Valid@RequestBody TarefaPatchDto tarefaRequisicaoDto,
+            @AuthenticationPrincipal Usuario usuario
+    ){
+        return ResponseEntity.ok(
+                tarefaService.atualizarTarefa(
+                        usuario,
+                        idTarefa,
+                        tarefaRequisicaoDto));
+    }
+
+    @DeleteMapping("/{idTarefa}")
+    public ResponseEntity<Void> deletarTarefa(
+            @PathVariable Long idTarefa,
+            @AuthenticationPrincipal Usuario usuario
+    ){
+        tarefaService.deletarTarefaPorId(usuario,idTarefa);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
 }

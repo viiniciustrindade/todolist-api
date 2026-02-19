@@ -1,7 +1,9 @@
 package com.senai.todolist.service.tarefa;
 
+import com.senai.todolist.domain.dto.tarefa.TarefaPatchDto;
 import com.senai.todolist.domain.dto.tarefa.TarefaRequisicaoDto;
 import com.senai.todolist.domain.dto.tarefa.TarefaRespostaDto;
+import com.senai.todolist.domain.exception.TarefaNãoExisteException;
 import com.senai.todolist.domain.mapper.TarefaMapper;
 import com.senai.todolist.domain.model.Tarefa;
 import com.senai.todolist.domain.model.Usuario;
@@ -18,8 +20,8 @@ public class TarefaService {
 
     private final TarefaMapper tarefaMapper;
 
-    public TarefaRespostaDto criarTarefa(TarefaRequisicaoDto tarefaRequisicaoDto,
-                                         Usuario usuario){
+    public TarefaRespostaDto criarTarefa(Usuario usuario,
+                                         TarefaRequisicaoDto tarefaRequisicaoDto){
         Tarefa tarefa = tarefaMapper.toEntity(tarefaRequisicaoDto);
         tarefa.setUsuario(usuario);
 
@@ -33,5 +35,34 @@ public class TarefaService {
         Page<Tarefa> pagina = tarefaRepository.findByUsuario(usuario,pageable);
 
         return pagina.map(tarefaMapper::toRespostaDto);
+    }
+
+    public TarefaRespostaDto atualizarTarefa(
+            Usuario usuario, Long idTarefa,
+            TarefaPatchDto patchDto) {
+
+        Tarefa tarefa = tarefaRepository.findByIdAndUsuario(idTarefa, usuario)
+                .orElseThrow(() -> new TarefaNãoExisteException(idTarefa));
+
+        if (patchDto.nomeTarefa() != null) {
+            tarefa.setNomeTarefa(patchDto.nomeTarefa());
+        }
+        if (patchDto.descricaoTarefa() != null) {
+            tarefa.setDescricaoTarefa(patchDto.descricaoTarefa());
+        }
+        if (patchDto.prioridade() != null) {
+            tarefa.setPrioridade(patchDto.prioridade());
+        }
+
+        Tarefa tarefaSalva = tarefaRepository.save(tarefa);
+        return tarefaMapper.toRespostaDto(tarefaSalva);
+    }
+
+    public void deletarTarefaPorId(Usuario usuario, Long idTarefa) {
+        if(tarefaRepository.existsByIdAndUsuario(idTarefa,usuario)){
+           tarefaRepository.deleteById(idTarefa);
+        }
+
+        throw new TarefaNãoExisteException(idTarefa);
     }
 }
