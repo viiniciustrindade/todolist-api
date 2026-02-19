@@ -26,8 +26,19 @@ public class Tarefa {
 
     @Column(nullable = false)
     private int prioridade;
+
+    @Column(nullable = false)
+    private boolean concluida;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    public Tarefa(String nomeTarefa, String descricaoTarefa, int prioridade){
+        this.nomeTarefa = nomeTarefa;
+        this.descricaoTarefa = descricaoTarefa;
+        this.prioridade = prioridade;
+        concluida = false;
+    }
 }
 

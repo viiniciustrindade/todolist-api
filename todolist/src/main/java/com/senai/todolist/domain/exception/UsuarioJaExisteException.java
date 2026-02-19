@@ -1,7 +1,10 @@
 package com.senai.todolist.domain.exception;
 
-public class UsuarioJaExisteException extends RuntimeException{
-    public UsuarioJaExisteException(String mensagem){
-        super(mensagem);
+import org.springframework.http.HttpStatus;
+
+public class UsuarioJaExisteException extends BusinessException{
+    public UsuarioJaExisteException(String email) {
+        super("Usuário com email " + email + " já existe.",
+                ErrorCode.USUARIO_JA_EXISTE);
     }
 }
