@@ -16,12 +16,15 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API do Conselho")
+                        .title("Lista de Tarefas")
                         .version("1.0.0")
-                        .description("Documentação da API com Swagger/OpenAPI")
+                        .description("""
+                                Esta é uma API de gerenciamento de tarefas (ToDoList) desenvolvida com Spring Boot, seguindo as melhores práticas de desenvolvimento, arquitetura limpa (Clean Architecture) e princípios de DDD (Domain-Driven Design).
+                                A aplicação permite que usuários autenticados criem, atualizem, consultem e excluam tarefas, atribuindo prioridades e mantendo o controle completo sobre suas atividades.
+                                A API também está preparada para integrações futuras, incluindo autenticação via OAuth2 com provedores externos, testes unitários, de integração e end-to-end, garantindo qualidade, manutenibilidade e escalabilidade do sistema.""")
                         .contact(new Contact()
-                                .name("Seu Nome")
-                                .email("seuemail@exemplo.com"))
+                                .name("Vinicius Trindade")
+                                .email("vinicius.mjt@gmail.com"))
                         .license(new License()
                                 .name("Licença MIT")
                                 .url("https://opensource.org/licenses/MIT")))
